@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIXZONE — Servis HP & Elektronik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e1a;
+  --panel:#121a2c;
+  --panel2:#182238;
+  --line:#26304a;
+  --cyan:#4fd1ff;
+  --cyan-dim:#4fd1ff1f;
+  --ok:#5eead4;
+  --warn:#ffcf5c;
+  --ink:#eef2f7;
+  --ink-dim:#8d9ab8;
+  --radius:12px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',Arial,sans-serif;line-height:1.55}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:'Space Grotesk',Arial,sans-serif;margin:0}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* nav */
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}
+.logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px}
+.logo span{color:var(--cyan)}
+.nav-right{display:flex;align-items:center;gap:14px}
+.status-pill{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-dim);border:1px solid var(--line);padding:8px 12px;border-radius:20px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.status-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px #5eead422}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#06101a;padding:12px 20px;border-radius:9px;font-weight:700;font-size:14px;white-space:nowrap;transition:transform .15s ease,filter .15s ease}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.btn.ghost:hover{border-color:var(--cyan);background:transparent}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.eyebrow{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:8px;height:8px;background:var(--cyan);border-radius:50%;box-shadow:0 0 0 3px var(--cyan-dim)}
+
+/* hero */
+.hero{padding:60px 0 76px;background:radial-gradient(ellipse at 20% 0%,#17234a,var(--bg) 60%)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center}
+.hero h1{font-size:clamp(36px,5vw,58px);line-height:1.02;margin:16px 0 18px}
+.hero h1 em{font-style:normal;color:var(--cyan)}
+.hero p{max-width:480px;color:var(--ink-dim);font-size:16.5px;margin-bottom:26px}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px}
+.trust{display:flex;gap:18px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-dim)}
+.trust span{display:inline-flex;align-items:center;gap:6px}
+.trust svg{width:14px;height:14px;stroke:var(--ok)}
+
+/* terminal card */
+.term{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.term-head{background:var(--panel2);padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line)}
+.term-dot{width:10px;height:10px;border-radius:50%}
+.term-head .t1{background:#ff6a6a}.term-head .t2{background:#ffcf5c}.term-head .t3{background:#5eead4}
+.term-head span{margin-left:8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-dim)}
+.term-body{padding:22px 20px}
+.term-line{display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:13px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.term-line:last-of-type{border-bottom:none}
+.term-line .label{color:var(--ink-dim)}
+.term-line .val{font-weight:700}
+.val.ok{color:var(--ok)}
+.val.warn{color:var(--warn)}
+.term-foot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+.status-chip{background:#ffcf5c1e;color:var(--warn);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:6px 12px;border-radius:20px;letter-spacing:.04em}
+.term-foot .ticket{font-size:11.5px;color:var(--ink-dim);font-family:'JetBrains Mono',monospace}
+
+/* sections */
+.section{padding:76px 0}
+.section-head{max-width:600px;margin-bottom:42px}
+.section-head h2{font-size:clamp(27px,3.8vw,38px);margin:12px 0 12px}
+.section-head p{color:var(--ink-dim);font-size:15.5px;line-height:1.6}
+
+/* service cards */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.svc-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px 20px;transition:border-color .15s ease,transform .15s ease}
+.svc-card:hover{border-color:var(--cyan);transform:translateY(-4px)}
+.svc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.svc-icon{width:42px;height:42px;border-radius:10px;background:var(--panel2);display:flex;align-items:center;justify-content:center}
+.svc-icon svg{width:22px;height:22px;stroke:var(--cyan)}
+.svc-id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-dim)}
+.svc-card h3{font-size:18px;margin-bottom:8px}
+.svc-card p{color:var(--ink-dim);font-size:13.5px;margin:0 0 16px;line-height:1.6}
+.svc-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:13px}
+.price{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--cyan);font-size:16px}
+.svc-link{font-size:12px;color:var(--cyan);font-weight:600}
+
+/* brand chips */
+.brand-strip{display:flex;flex-wrap:wrap;gap:10px}
+.brand-chip{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:9px 16px;font-size:13px;color:var(--ink-dim);display:flex;align-items:center;gap:8px}
+.brand-chip b{color:var(--ink)}
+
+/* calculator */
+.calc-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:30px;display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:stretch}
+.calc-field{margin-bottom:18px}
+.calc-field label{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.calc-field select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;background:var(--panel2);color:var(--ink)}
+.calc-result{background:var(--cyan-dim);border:1px solid var(--cyan);border-radius:12px;padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.calc-result .clabel{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-dim);margin-bottom:6px}
+.calc-result .amount{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--cyan);margin-bottom:14px}
+.calc-note{font-size:11px;color:var(--ink-dim);margin-top:14px;line-height:1.5}
+
+/* process */
+.process{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}
+.process::before{content:"";position:absolute;top:22px;left:0;right:0;height:1px;background:var(--line);z-index:0}
+.proc-step{position:relative;z-index:1;padding-right:14px}
+.proc-num{width:44px;height:44px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan);color:var(--cyan);font-family:'JetBrains Mono',monospace;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:14px}
+.proc-step h3{font-size:14.5px;margin-bottom:8px}
+.proc-step p{color:var(--ink-dim);font-size:13px;line-height:1.6;margin:0}
+
+/* why us */
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.why-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.why-card svg{width:24px;height:24px;stroke:var(--cyan);margin-bottom:14px}
+.why-card h3{font-size:14.5px;margin-bottom:8px}
+.why-card p{color:var(--ink-dim);font-size:13px;line-height:1.6;margin:0}
+
+/* faq */
+.faq-list{display:grid;gap:12px}
+.faq-item{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.faq-q{width:100%;text-align:left;background:none;border:none;padding:17px 18px;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:14px}
+.faq-q svg{width:16px;height:16px;stroke:var(--cyan);transition:transform .2s ease;flex:none}
+.faq-item.open .faq-q svg{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.faq-item.open .faq-a{max-height:200px}
+.faq-a p{padding:0 18px 17px;color:var(--ink-dim);font-size:13.5px;margin:0;line-height:1.6}
+
+/* testimonials */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.testi-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.testi-card .stars{color:var(--warn);font-size:13px;letter-spacing:2px;margin-bottom:12px}
+.testi-card p{font-size:14px;color:var(--ink);line-height:1.6;margin:0 0 16px}
+.testi-who{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-dim);border-top:1px solid var(--line);padding-top:13px}
+.testi-who b{color:var(--ink);font-family:'Inter',sans-serif;font-weight:600}
+
+/* contact cta */
+.contact{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:44px;display:grid;grid-template-columns:1.3fr .7fr;gap:32px;align-items:center}
+.contact h2{font-size:clamp(24px,3.4vw,32px);margin-bottom:12px}
+.contact p{color:var(--ink-dim);font-size:14.5px;max-width:440px}
+.contact-info{display:grid;gap:14px}
+.contact-row{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;color:var(--ink-dim)}
+.contact-row svg{width:17px;height:17px;stroke:var(--cyan);flex:none;margin-top:2px}
+.contact-row b{color:var(--ink);display:block;font-weight:600;margin-bottom:2px;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;font-family:'JetBrains Mono',monospace}
+
+footer{padding:34px 0;border-top:1px solid var(--line)}
+.foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.foot-row .small{color:var(--ink-dim);font-size:13px}
+.foot-links{display:flex;gap:20px;font-size:13px;color:var(--ink-dim)}
+.foot-links a:hover{color:var(--cyan)}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+@media(max-width:920px){
+  .hero-grid{grid-template-columns:1fr}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .why-grid{grid-template-columns:1fr 1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .process{grid-template-columns:1fr 1fr;row-gap:26px}
+  .process::before{display:none}
+  .calc-card{grid-template-columns:1fr}
+  .contact{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .svc-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr}
+  .process{grid-template-columns:1fr}
+  .nav-right .status-pill{display:none}
+  .contact{padding:28px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<nav>
+  <a class="logo" href="#top">FIX<span>ZONE</span></a>
+  <div class="nav-right">
+    <span class="status-pill"><span class="dot"></span>Teknisi online</span>
+    <a class="btn" href="https://wa.me/6281234567890">Chat Teknisi</a>
+  </div>
+</nav>
+</div>
+
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <div class="eyebrow">Servis HP & Elektronik</div>
+      <h1>HP bermasalah?<br>Kami <em>diagnosa</em>, kami perbaiki.</h1>
+      <p>Ganti LCD, baterai, charging, hingga software — dicek dulu sebelum dikerjakan, dengan estimasi jujur dan sparepart bergaransi.</p>
+      <div class="cta-row">
+        <a class="btn" href="https://wa.me/6281234567890">Konsultasi Gratis →</a>
+        <a class="btn ghost" href="#layanan">Lihat Layanan</a>
+      </div>
+      <div class="trust">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>Garansi Servis</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>Sparepart Original/OEM</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>Estimasi Jujur</span>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="term">
+        <div class="term-head"><span class="term-dot t1"></span><span class="term-dot t2"></span><span class="term-dot t3"></span><span>diagnostic.log</span></div>
+        <div class="term-body">
+          <div class="term-line"><span class="label">&gt; Memindai perangkat...</span></div>
+          <div class="term-line"><span class="label">Layar & Touchscreen</span><span class="val ok">OK</span></div>
+          <div class="term-line"><span class="label">Baterai</span><span class="val warn">62% — disarankan ganti</span></div>
+          <div class="term-line"><span class="label">Port Charging</span><span class="val ok">OK</span></div>
+          <div class="term-line"><span class="label">Kamera & Speaker</span><span class="val ok">OK</span></div>
+          <div class="term-line"><span class="label">IMEI</span><span class="val ok">Terverifikasi</span></div>
+          <div class="term-foot">
+            <span class="status-chip">● PERLU TINDAKAN</span>
+            <span class="ticket">Tiket #SVC-0871</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="layanan">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Layanan Servis</div>
+      <h2>Satu tempat untuk semua keluhan perangkat.</h2>
+      <p>Dari layar retak sampai software error — dicek dulu, baru dikerjakan setelah kamu setuju dengan estimasinya.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card reveal">
+        <div class="svc-top"><div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><span class="svc-id mono">SVC-01</span></div>
+        <h3>Ganti LCD</h3>
+        <p>Layar pecah, bergaris, blank, atau touchscreen tidak responsif.</p>
+        <div class="svc-foot"><span class="price">Cek Harga</span><a class="svc-link" href="https://wa.me/6281234567890">Chat →</a></div>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-top"><div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="10" y1="6" x2="14" y2="6"/></svg></div><span class="svc-id mono">SVC-02</span></div>
+        <h3>Ganti Baterai</h3>
+        <p>Baterai cepat habis, kembung, drop, atau HP mati sendiri.</p>
+        <div class="svc-foot"><span class="price">Mulai 100K</span><a class="svc-link" href="https://wa.me/6281234567890">Chat →</a></div>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-top"><div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><span class="svc-id mono">SVC-03</span></div>
+        <h3>Perbaikan Charging</h3>
+        <p>Port charger longgar, kotor, atau tidak bisa mengisi daya.</p>
+        <div class="svc-foot"><span class="price">Mulai 75K</span><a class="svc-link" href="https://wa.me/6281234567890">Chat →</a></div>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-top"><div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div><span class="svc-id mono">SVC-04</span></div>
+        <h3>Perbaikan Software</h3>
+        <p>Bootloop, lupa pola/password, lemot, atau reset ulang sistem.</p>
+        <div class="svc-foot"><span class="price">Mulai 60K</span><a class="svc-link" href="https://wa.me/6281234567890">Chat →</a></div>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-top"><div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg></div><span class="svc-id mono">SVC-05</span></div>
+        <h3>Kena Air / Mati Total</h3>
+        <p>Cleaning ultrasonic dan pengecekan komponen akibat cairan masuk.</p>
+        <div class="svc-foot"><span class="price">Cek Harga</span><a class="svc-link" href="https://wa.me/6281234567890">Chat →</a></div>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-top"><div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><span class="svc-id mono">SVC-06</span></div>
+        <h3>Servis Laptop & Tablet</h3>
+        <p>Ganti SSD/RAM, install ulang, dan pembersihan hardware.</p>
+        <div class="svc-foot"><span class="price">Cek Harga</span><a class="svc-link" href="https://wa.me/6281234567890">Chat →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Merek Yang Dilayani</div>
+      <h2>Hampir semua merek, kami tangani.</h2>
+    </div>
+    <div class="brand-strip reveal">
+      <span class="brand-chip"><b>iPhone</b> & iPad</span>
+      <span class="brand-chip"><b>Samsung</b></span>
+      <span class="brand-chip"><b>Xiaomi</b> / Redmi / Poco</span>
+      <span class="brand-chip"><b>Oppo</b></span>
+      <span class="brand-chip"><b>Vivo</b></span>
+      <span class="brand-chip"><b>Realme</b></span>
+      <span class="brand-chip"><b>Laptop</b> semua merek</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Cek Estimasi</div>
+      <h2>Hitung kira-kira biayanya di sini.</h2>
+      <p>Pilih jenis perangkat dan keluhannya untuk lihat estimasi awal — biaya pasti dikonfirmasi setelah pengecekan langsung.</p>
+    </div>
+    <div class="calc-card reveal">
+      <div>
+        <div class="calc-field">
+          <label for="calcDevice">Jenis Perangkat</label>
+          <select id="calcDevice">
+            <option value="hp">Smartphone</option>
+            <option value="tablet">Tablet</option>
+            <option value="laptop">Laptop</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="calcIssue">Keluhan</label>
+          <select id="calcIssue">
+            <option value="150000|350000" data-name="Ganti LCD">Layar pecah / ganti LCD</option>
+            <option value="100000|250000" data-name="Ganti Baterai">Baterai drop / ganti baterai</option>
+            <option value="75000|150000" data-name="Perbaikan Charging">Tidak bisa charge</option>
+            <option value="60000|150000" data-name="Perbaikan Software">Bootloop / lupa pola / lemot</option>
+            <option value="100000|400000" data-name="Kena Air / Mati Total">Kena air / mati total</option>
+          </select>
+        </div>
+      </div>
+      <div class="calc-result">
+        <div class="clabel">Estimasi Biaya</div>
+        <div class="amount" id="calcAmount">Rp150.000 – Rp350.000</div>
+        <a class="btn" href="https://wa.me/6281234567890" id="calcWaBtn" target="_blank">Konsultasi via WhatsApp →</a>
+        <div class="calc-note">Estimasi kasar. Harga pasti ditentukan setelah pengecekan fisik perangkat.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Alur Servis</div>
+      <h2>Prosesnya jelas dari awal.</h2>
+    </div>
+    <div class="process reveal">
+      <div class="proc-step"><div class="proc-num">01</div><h3>Diagnosa Gratis</h3><p>Perangkat dicek menyeluruh sebelum ada biaya yang muncul.</p></div>
+      <div class="proc-step"><div class="proc-num">02</div><h3>Estimasi</h3><p>Info biaya dan waktu pengerjaan, tunggu persetujuan dulu.</p></div>
+      <div class="proc-step"><div class="proc-num">03</div><h3>Perbaikan</h3><p>Dikerjakan teknisi berpengalaman dengan sparepart bergaransi.</p></div>
+      <div class="proc-step"><div class="proc-num">04</div><h3>Quality Check</h3><p>Uji fungsi menyeluruh sebelum perangkat dikembalikan.</p></div>
+      <div class="proc-step"><div class="proc-num">05</div><h3>Garansi</h3><p>Perangkat diserahkan lengkap dengan kartu garansi servis.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Kenapa FixZone</div>
+      <h2>Servis yang bisa dipercaya.</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v6c0 5 4 8.5 9 9 5-.5 9-4 9-9V7l-9-5z"/><path d="m9 12 2 2 4-4"/></svg>
+        <h3>Garansi Servis</h3>
+        <p>Setiap perbaikan disertai garansi, bukan sekadar janji lisan.</p>
+      </div>
+      <div class="why-card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <h3>Sparepart Original/OEM</h3>
+        <p>Kualitas komponen dijaga, bukan sparepart kelas KW.</p>
+      </div>
+      <div class="why-card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4M15 3h4a2 2 0 0 1 2 2v4M9 21H5a2 2 0 0 1-2-2v-4M15 21h4a2 2 0 0 0 2-2v-4"/></svg>
+        <h3>Estimasi Transparan</h3>
+        <p>Harga diinfokan di depan, tidak ada biaya tambahan mendadak.</p>
+      </div>
+      <div class="why-card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <h3>Servis Express</h3>
+        <p>Keluhan ringan seperti LCD dan baterai bisa selesai hari itu juga.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">FAQ</div>
+      <h2>Pertanyaan yang sering ditanyakan.</h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q">Apakah data di HP saya aman?<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p>Aman. Teknisi hanya mengerjakan bagian yang dikeluhkan dan tidak mengakses data pribadi tanpa izin.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Berapa lama garansi servis?<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p>Garansi 30 hari untuk sparepart dan hasil pengerjaan, selama pemakaian normal.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Apakah bisa ditunggu di tempat?<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p>Bisa untuk keluhan ringan seperti ganti LCD atau baterai. Kasus berat butuh 1-2 hari kerja.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Bagaimana kalau setelah dicek ternyata tidak jadi servis?<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p>Tidak masalah, diagnosa awal gratis dan tanpa kewajiban lanjut servis.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Kata Pelanggan</div>
+      <h2>Bukan cuma janji.</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>“Estimasi dikasih dulu sebelum dikerjakan, jadi tidak was-was soal biaya tambahan. LCD juga awet sampai sekarang.”</p>
+        <div class="testi-who"><b>Bayu</b><span>Ganti LCD</span></div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>“HP kena air, awalnya kira sudah mati total. Ternyata masih bisa diselamatkan, teknisinya jelasin prosesnya juga.”</p>
+        <div class="testi-who"><b>Citra</b><span>Kena Air</span></div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>“Baterai drop parah, sekarang tahan seharian lagi. Prosesnya juga cepat, sejam langsung selesai.”</p>
+        <div class="testi-who"><b>Doni</b><span>Ganti Baterai</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="kontak" style="padding-top:0">
+  <div class="wrap">
+    <div class="contact reveal">
+      <div>
+        <div class="eyebrow">HP Sedang Bermasalah?</div>
+        <h2>Chat teknisi kami sekarang.</h2>
+        <p>Kirim tipe perangkat dan keluhannya — kami bantu cek estimasi dan waktu pengerjaan.</p>
+        <div class="cta-row" style="margin-top:22px">
+          <a class="btn" href="https://wa.me/6281234567890">WhatsApp Teknisi →</a>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span><b>Lokasi</b>Jl. Contoh No. 12</span></div>
+        <div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span><b>Jam Buka</b>Setiap hari, 09.00–20.00</span></div>
+        <div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2.1z"/></svg><span><b>WhatsApp</b>0812-3456-7890</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="small">© 2026 FIXZONE — Jl. Contoh No. 12</span>
+    <div class="foot-links">
+      <a href="https://wa.me/6281234567890">WhatsApp</a>
+      <a href="#layanan">Layanan</a>
+      <a href="#kontak">Kontak</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+} else {
+  document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+}
+
+/* kalkulator estimasi biaya servis */
+const calcDevice = document.getElementById('calcDevice');
+const calcIssue = document.getElementById('calcIssue');
+const calcAmount = document.getElementById('calcAmount');
+const calcWaBtn = document.getElementById('calcWaBtn');
+function formatRupiah(n){ return 'Rp' + n.toLocaleString('id-ID'); }
+function updateCalc(){
+  const [low, high] = calcIssue.value.split('|').map(Number);
+  const deviceMultiplier = calcDevice.value === 'laptop' ? 1.6 : (calcDevice.value === 'tablet' ? 1.15 : 1);
+  const lo = Math.round(low * deviceMultiplier / 5000) * 5000;
+  const hi = Math.round(high * deviceMultiplier / 5000) * 5000;
+  calcAmount.textContent = formatRupiah(lo) + ' – ' + formatRupiah(hi);
+  const deviceName = calcDevice.options[calcDevice.selectedIndex].text;
+  const issueName = calcIssue.options[calcIssue.selectedIndex].dataset.name;
+  const msg = `Halo FixZone, saya mau konsultasi untuk ${deviceName} dengan keluhan ${issueName}. Estimasi yang saya lihat di web sekitar ${formatRupiah(lo)}–${formatRupiah(hi)}.`;
+  calcWaBtn.href = 'https://wa.me/6281234567890?text=' + encodeURIComponent(msg);
+}
+[calcDevice, calcIssue].forEach(el => el.addEventListener('input', updateCalc));
+updateCalc();
+
+/* accordion FAQ */
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.querySelector('.faq-q').addEventListener('click', ()=>{
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(o=>o.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+</script>
+
+</body>
+</html>
